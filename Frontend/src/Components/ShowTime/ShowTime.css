@@ -1,0 +1,93 @@
+/* Your existing styles */
+.dates {
+    border-radius: 4px;
+    border: none;
+    font-size: 17px;
+    font-weight: 500;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    width: 8%;
+
+  }
+  
+  .clicked {
+    background-color: rgb(248, 68, 100);
+    color: white;
+    width: 8%;
+
+  }
+  
+.hr-line {
+    margin: 20px auto; 
+    border: 1px solid #ddd;
+  }
+  .button-name {
+    border: 1px solid rgb(49, 49, 49); 
+    color: rgb(87, 160, 87);
+    padding: 6px;
+    background-color: #ffffff;
+    cursor: pointer;
+    width: 8%;
+  }
+  
+  .empty-heart-icon {
+    top: 3px; 
+    position: relative; 
+
+  }
+  .empty-icon {
+    top: 3px; 
+    position: relative; 
+   size: 30;
+   color:rgb(207, 16, 63) ;
+  }
+  .booking-content{
+    display: flex;
+  }
+  .booking-image{
+    width:200px;
+    height: 220px;
+
+    }
+  .booking-text{
+    margin: 10px;
+  }
+  .book{
+    border-radius: 4px;
+    border:none;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    background-color: #f74141;
+    cursor: pointer;
+    width: 50%;
+margin-left: 20%;  }
+.heart-icon{
+  color:rgb(248, 68, 100) ;
+}
+.s button{
+  display : none
+}
+.s:hover button{
+  display : block;
+  color: rgb(203, 71, 71);
+  height:5%
+}
+.s{
+  width:10%;
+  background-color: aquamarine;
+}
+.showTimeButton{
+  height: 10%;
+
+}
+.booking-close-icon{
+  float:right;
+  cursor: pointer;
+}
+
+#seats-detail{
+background-color:rgb(248, 68, 100);
+color: #ffffff;
+border: none;
+
+}

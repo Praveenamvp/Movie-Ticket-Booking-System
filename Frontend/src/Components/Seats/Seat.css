@@ -1,0 +1,39 @@
+.seats-main-content{
+    display: flex; 
+    justify-content: center;
+}
+.content-seats{
+    display: flex; 
+    flex-direction: row;
+    gap: 10px; 
+    width:80%;
+    flex-wrap: wrap;
+    justify-content: center;
+  
+}
+.seat-button{
+    width: 40px;
+    padding: 10px;
+    border: 1px green solid;
+    cursor:pointer;
+    background-color: white;
+    color: green;
+    border-radius: 3px;
+}
+.seat-button:hover{
+    background-color: green;
+    color: white;
+    
+}
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    width: 40px;
+    padding: 10px;
+
+  }
+  .selected-seat{
+    background-color: green;
+    color: rgb(255, 255, 255);
+
+  }

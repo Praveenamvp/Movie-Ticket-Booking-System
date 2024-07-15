@@ -1,0 +1,37 @@
+.location-data {
+    background-color: #f4f4f4;
+    color: #000;
+    padding: 5px;
+    margin-top: 10px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    text-align: left;
+    
+
+  }
+.location{
+    display: flex;
+  }
+  .location-name:hover{
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+  }
+  .location-name{
+    color: #242424;
+    font-weight: 400;
+
+  }
+  .clicked-icon{
+    color: rgb(248, 68, 100);
+    font-size: 13px;
+    top:1px;
+    position: relative;
+    margin-right: 3px;
+
+  }
+  
+  
+  
