@@ -1,15 +1,15 @@
-﻿using Models.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using Models.Entity;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace BusinessLayer.Interfaces
-{
-    public  interface IBlobService
-    {
-        public Task<string> GetBlob(string blobName,string containerName);
+//namespace BusinessLayer.Interfaces
+//{
+//    public  interface IBlobService
+//    {
+//        public Task<string> GetBlob(string blobName,string containerName);
 
-    }
-}
+//    }
+//}

@@ -46,37 +46,40 @@ namespace BusinessLayer.Implementations
             return null;
         }
 
-        public async  Task<UserDTO> LoginUser(UserRequest userRequest)
+public async  Task<UserDTO> LoginUser(UserRequest userRequest)
         {
-            UserDTO userDetails = null;
-            bool s = false;
-            var userData = await _userRepo.Get(userRequest);
-            var hmac = new HMACSHA512(userData.PasswordKey);
-            if (userData != null)
+            if (userRequest == null || string.IsNullOrEmpty(userRequest.Password))
             {
-                var password = hmac.ComputeHash(Encoding.UTF8.GetBytes(userRequest.Password));
-                for (int i = 0; i < password.Length; i++)
-                {
-                    if (password[i] != userData.PasswordHash[i])
-                    {
-                        return null;
-                    }
-                }
+                return null;
             }
 
-          
-            
-                    userDetails = new UserDTO();
-                    userDetails.UID = userData.UID;
-                    userDetails.Email = userData.Email;
-                     userDetails.Name = userData.UserName;
-                     userDetails.PhoneNumber= userData.PhoneNumber;
-                    userDetails.Token = await _tokenGenerate.GenerateToken(userDetails.Email);
-                    return userDetails;
-                
-            
+            var userData = await _userRepo.Get(userRequest);
+            // Validate that user exists and stored credentials are present
+            if (userData == null || userData.PasswordKey == null || userData.PasswordHash == null)
+            {
+                return null;
+            }
 
+            // Use the stored key to recreate the HMAC and compute the hash of the provided password.
+            using var hmac = new HMACSHA512(userData.PasswordKey);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userRequest.Password));
 
+            // Use constant-time comparison to avoid timing attacks and handle length mismatch safely.
+            if (!CryptographicOperations.FixedTimeEquals(computedHash, userData.PasswordHash))
+            {
+                return null;
+            }
+
+            var userDetails = new UserDTO
+            {
+                UID = userData.UID,
+                Email = userData.Email,
+                Name = userData.UserName,
+                PhoneNumber = userData.PhoneNumber,
+                Token = await _tokenGenerate.GenerateToken(userData.Email)
+            };
+
+            return userDetails;
             
         }
     }

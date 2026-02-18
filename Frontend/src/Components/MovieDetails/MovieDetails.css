@@ -1,37 +1,318 @@
+.movie-details-page {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  font-family: 'Nunito', sans-serif;
+}
 
-.movie-main-content{
+.movie-hero {
+  position: relative;
+  overflow: hidden;
+  background: #111111;
+  min-height: 320px;
   display: flex;
+  align-items: center;
+}
+
+.movie-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  filter: blur(18px) brightness(0.35) saturate(1.2);
+  transform: scale(1.08);
+  z-index: 0;
+}
+
+.movie-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.75) 0%,
+    rgba(0,0,0,0.45) 60%,
+    rgba(0,0,0,0.15) 100%
+  );
+  z-index: 1;
+}
+
+.movie-main-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 48px;
 }
 
 .movie-left {
-  width: 20%;
-  padding: 20px;
-  background-color: rgb(255, 255, 255);
+  flex-shrink: 0;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-.movie-left img{
-  width: 300px;
-  height:200px;
+.movie-poster-wrapper {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  background: #222;
+}
+
+.movie-left img {
   width: 100%;
   height: 100%;
-}
-.movie-right{
-  width: 80%;
-  padding: 20px;
-  background-color: rgb(255, 255, 255);
-
+  object-fit: cover;
+  display: block;
 }
 
-.start-icon{
+.in-cinemas-label {
+  background: rgba(0,0,0,0.70);
+  color: #ffffff;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 18px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.movie-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 0;
+}
+
+.movie-right h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.movie-rating-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #1a1a1a;
+  border: 1.5px solid rgba(255,255,255,0.20);
+  border-radius: 8px;
+  padding: 10px 16px;
+  width: fit-content;
+}
+
+.rating-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.star-icon,
+.start-icon {
   color: rgb(248, 68, 100);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
 }
-.book-tickets-button{
-  width:28%;
-  border-radius: 4px;
-  background-color: rgb(248, 68, 100);
-  color: rgb(255, 255, 255);
+
+.rating-score {
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rating-votes {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.rating-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(255,255,255,0.20);
+  margin: 0 4px;
+}
+
+.rate-now-btn {
+  background: transparent;
   border: none;
-  height: 15%;
-  font-size: larger;
+  color: rgba(255,255,255,0.75);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
   cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.03em;
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rate-now-btn:hover { color: #ffffff; }
+
+.movie-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.80);
+  font-weight: 600;
+}
+
+.meta-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  flex-shrink: 0;
+}
+
+.movie-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.movie-tag {
+  border: 1.5px solid rgba(255,255,255,0.30);
+  background: transparent;
+  color: rgba(255,255,255,0.85);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  cursor: default;
+}
+
+.book-tickets-button {
+  width: fit-content;
+  min-width: 220px;
+  padding: 0 36px;
+  height: 50px;
+  border-radius: 8px;
+  background-color: rgb(248, 68, 100);
+  color: #ffffff;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.03em;
+}
+
+.book-tickets-button:hover {
+  background: rgb(220, 40, 75);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(248, 68, 100, 0.30);
+}
+
+.book-tickets-button:active { transform: translateY(0); }
+
+.movie-about {
+  padding: 36px 48px 52px;
+  background: #ffffff;
+}
+
+.movie-about h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e8e8f0;
+  position: relative;
+}
+
+.movie-about h2::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 52px;
+  height: 2px;
+  background: rgb(248, 68, 100);
+  border-radius: 2px;
+}
+
+.movie-about p {
+  font-size: 0.95rem;
+  color: #555570;
+  line-height: 1.9;
+  max-width: 800px;
+}
+
+.movie-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  color: #9999b0;
+  gap: 10px;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(248, 68, 100);
+  animation: loadBounce 1.2s ease-in-out infinite;
+}
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes loadBounce {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+  40%           { transform: scale(1);   opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .movie-main-content { flex-direction: column; padding: 28px 20px; gap: 24px; }
+  .movie-left { width: 100%; max-width: 220px; margin: 0 auto; }
+  .movie-right h1 { font-size: 1.6rem; }
+  .book-tickets-button { width: 100%; min-width: unset; }
+  .movie-about { padding: 24px 20px 40px; }
+}
+
+
+@media (max-width: 768px) {
+  .movie-main-content {
+    flex-direction: column;
+    padding: 28px 20px;
+    gap: 24px;
+  }
+  .movie-left {
+    width: 100%;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+  .movie-right h1 {
+    font-size: 1.6rem;
+  }
+  .book-tickets-button {
+    width: 100%;
+    min-width: unset;
+  }
+  .movie-about {
+    padding: 24px 20px 40px;
+  }
 }

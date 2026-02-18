@@ -11,7 +11,7 @@ import {
   updateTicketState,
 } from "../../Redux/Action";
 import LocationDic from "../../Models/LocationDic";
-import "../LocationFilter/LocationFilter.css"
+import "../LocationFilter/LocationFilter.css";
 
 function LandingFilterComponent() {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -20,10 +20,10 @@ function LandingFilterComponent() {
   const dispatch = useDispatch();
   const ticketBooking = useSelector((state: any) => state);
   const [locationName, setLocationName] = useState<string>(
-    ticketBooking.filterLocationName
+    ticketBooking.filterLocationName,
   );
   const [locationUID, setLocationUID] = useState<string>(
-    ticketBooking.filterLocationUID
+    ticketBooking.filterLocationUID,
   );
 
   const fetchLocations = async () => {
@@ -50,7 +50,7 @@ function LandingFilterComponent() {
 
   const handleSearch = (searchData: string) => {
     const filtered = locations.filter((location: LocationDic) =>
-      location.name.toLowerCase().includes(searchData.toLowerCase())
+      location.name.toLowerCase().includes(searchData.toLowerCase()),
     );
     setLocations(filtered);
     setSearchValue(searchData);
@@ -68,7 +68,7 @@ function LandingFilterComponent() {
 
   useEffect(() => {
     const filtered = locations.filter((location: LocationDic) =>
-      location.name.toLowerCase().includes(searchValue.toLowerCase())
+      location.name.toLowerCase().includes(searchValue.toLowerCase()),
     );
     setLocations(filtered);
   }, [searchValue]);
@@ -87,7 +87,7 @@ function LandingFilterComponent() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            height: "40%",
+            height: "60%",
             padding: "20px",
             backgroundColor: "#fff",
             boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
@@ -95,20 +95,23 @@ function LandingFilterComponent() {
           },
         }}
       >
-        <div>
+        <div className="filter-modal-header">
           <input
             type="text"
             id="searchInput"
             value={searchValue}
             placeholder=" 🔍 Enter search term"
-            style={{ width: "90%" }}
             onChange={(e) => {
               handleSearch(e.target.value);
             }}
           />
-          <i onClick={closeModal}>
-            <AiOutlineCloseSquare className="model-close" />
-          </i>
+          <AiOutlineCloseSquare
+            className="model-close"
+            size={22}
+            onClick={closeModal}
+            role="button"
+            aria-label="Close"
+          />
         </div>
 
         <div>

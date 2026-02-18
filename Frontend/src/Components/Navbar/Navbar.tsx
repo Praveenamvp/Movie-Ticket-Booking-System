@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "../LandingPage/LandingPage.css";
 import logo from "../../Images/Logo.png";
 import { FaUserAstronaut } from "react-icons/fa";
-import { IoIosSearch } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import TicketBooking from "../../Models/StateModels";
 import {
@@ -22,7 +21,6 @@ function NavBarComponent() {
   const handleSignIn = () => {
     dispatch(updateLoginModelState(true));
     console.log(ticketBooking.loginModelState + "login state");
-
   };
   const openModal = () => {
     dispatch(updateModelState(true));
@@ -35,10 +33,6 @@ function NavBarComponent() {
       <div className="nav-bar">
         <img className="logo" src={logo} alt="Logo" />
         <div className="nav-bar-search">
-          <i>
-            <IoIosSearch />
-          </i>
-
           <input
             type="text"
             id="searchInput"

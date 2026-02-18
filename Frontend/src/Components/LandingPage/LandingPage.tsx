@@ -8,11 +8,11 @@ import Genre from "../../Models/Genre";
 import { RiFileCloseFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import TicketBooking from "../../Models/StateModels";
-import {  updateMovies } from "../../Redux/Action";
+import { updateMovies } from "../../Redux/Action";
 import { FaStar } from "react-icons/fa";
 import NavBarComponent from "../Navbar/Navbar";
 
-const LandingPage = () => {
+const LandingPage: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [languages, setLanguages] = useState<Language[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -20,57 +20,61 @@ const LandingPage = () => {
   const [clickedLanguage, setClickedLanguage] = useState<number | null>(null);
   const [clickedGenre, setClickedGenre] = useState<number | null>(null);
   const [searchItem, setSearchItem] = useState<string>("");
+
   const navigate = useNavigate();
   const ticketBooking = useSelector((state: TicketBooking) => state);
   const dispatch = useDispatch();
-  var [selectedGenre, setSelectedGenre] = useState<string | null>(null);
-  var [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
 
-  let func = async (id: string) => {
-    var moviesData = await MovieService.fetchMovieDetailsByLocation(id || "");
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
+
+  const fetchMovies = async (id: string) => {
+    const moviesData = await MovieService.fetchMovieDetailsByLocation(id || "");
     setMovies(moviesData.result);
     dispatch(updateMovies(moviesData.result));
   };
 
   useEffect(() => {
-    func(ticketBooking.filterLocationUID);
-    let fetchLanguages = async () => {
-      var languageDatas = await MovieService.fetchAllLanguages();
+    fetchMovies(ticketBooking.filterLocationUID);
+
+    const fetchLanguages = async () => {
+      const languageDatas = await MovieService.fetchAllLanguages();
       setLanguages(languageDatas);
     };
     fetchLanguages();
-    let fetchGenres = async () => {
-      var genreDatas = await MovieService.fetchAllGenres();
+
+    const fetchGenres = async () => {
+      const genreDatas = await MovieService.fetchAllGenres();
       setGenres(genreDatas);
     };
     fetchGenres();
   }, []);
 
   useEffect(() => {
-    console.log(ticketBooking.loggedInUser.name);
-  }, [ticketBooking.loggedInUser]);
-
-  useEffect(() => {
-    func(ticketBooking.filterLocationUID);
+    fetchMovies(ticketBooking.filterLocationUID);
   }, [ticketBooking.filterLocationUID]);
 
+  // Search filter
   useEffect(() => {
-    const filtered = movies.filter((movie) =>
-      (movie.title.toLowerCase()).includes(
-        searchItem.toLowerCase()
-      )||(movie.language.toLowerCase()).includes(
-        searchItem.toLowerCase()
-      )
+    if (!searchItem.trim()) {
+      setFilteredMovies(movies);
+      return;
+    }
+    const filtered = movies.filter(
+      (movie) =>
+        movie.title.toLowerCase().includes(searchItem.toLowerCase()) ||
+        movie.language.toLowerCase().includes(searchItem.toLowerCase()),
     );
     setFilteredMovies(filtered);
   }, [searchItem, movies]);
 
+  // Language + genre filter
   useEffect(() => {
     const filtered = movies.filter((movie) => {
-      const match =
+      return (
         (!selectedLanguage || movie.language === selectedLanguage) &&
-        (!selectedGenre || movie.genre === selectedGenre);
-      return match;
+        (!selectedGenre || movie.genre === selectedGenre)
+      );
     });
     setFilteredMovies(filtered);
   }, [movies, selectedLanguage, selectedGenre]);
@@ -93,83 +97,48 @@ const LandingPage = () => {
     setSelectedGenre(genre);
     setClickedGenre(index);
   };
+
   const clearFilterLanguage = () => {
-    selectedLanguage = null;
+    setSelectedLanguage(null);
     setClickedLanguage(null);
     setFilteredMovies(movies);
   };
+
   const clearFilterGenre = () => {
-    selectedGenre = null;
+    setSelectedGenre(null);
     setClickedGenre(null);
     setFilteredMovies(movies);
   };
- 
 
+  const getImageSrc = (img: string) => {
+    const image = img || "";
+    if (!image) return "/Images/default-movie.png";
+    if (/^(https?:\/\/|\/|data:)/.test(image)) return image;
+    return `/Images/${image}`;
+  };
 
   return (
     <div>
-      {/* <div className="nav-bar">
-        <img className="logo" src={logo} alt="Logo" />
-        <div className="nav-bar-search">
-          <i>
-            <IoIosSearch />
-          </i>
+      <NavBarComponent />
 
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="🔍 Search for movies, language etc.."
-            value={searchItem}
-            onChange={(e) => handleSearchChange(e.target.value)}
-          />
-        </div>
-        <div className="nav-bar-right">
-          {ticketBooking ? (
-            <button className="nav-button" onClick={() => openModal()}>
-              {ticketBooking.filterLocationName} <span>▾</span>
-            </button>
-          ) : (
-            <div></div>
-          )}
-          {ticketBooking.loggedInUser.name ? (
-            <div>
-              {" "}
-              <button
-                className="nav-button-signin"
-                onClick={() => handleProfile()}
-              >
-                {ticketBooking.loggedInUser.name}&nbsp;
-                <FaUserAstronaut />
-              </button>
-            </div>
-          ) : (
-            <div>
-              <button className="nav-button-signin"  onClick={() => handleSignIn()}>sign in</button>
-            </div>
-          )}
-        </div>
-      </div> */}
-<NavBarComponent/>
       <div className="main-content">
+        {/* ── Sidebar ───────────────────────────────────────────── */}
         <div className="left-sidebar">
           <h3>Filters</h3>
+
+          {/* Language filter */}
           <div className="filters">
             <div className="filter-heading">
               Languages
-              <button
-                className="filter-clear"
-                onClick={() => clearFilterLanguage()}
-              >
+              <button className="filter-clear" onClick={clearFilterLanguage}>
                 Clear
               </button>
             </div>
             <div className="language-filters">
-              {languages.map((languageData: Language, index) => (
+              {languages.map((languageData: Language, index: number) => (
                 <button
                   key={index}
-                  className={`filter-button${
-                    index === clickedLanguage ? " active-button" : ""
-                  }`}
+                  className={`filter-button${index === clickedLanguage ? " active-button" : ""}`}
                   onClick={() =>
                     handleLanguageClick(languageData.language, index)
                   }
@@ -179,25 +148,20 @@ const LandingPage = () => {
               ))}
             </div>
           </div>
-          <br />
+
+          {/* Genre filter */}
           <div className="filters">
             <div className="filter-heading">
               Genre
-              <button
-                className="filter-clear"
-                style={{ marginLeft: "45%" }}
-                onClick={() => clearFilterGenre()}
-              >
+              <button className="filter-clear" onClick={clearFilterGenre}>
                 Clear
               </button>
             </div>
             <div className="language-filters">
-              {genres.map((genreData: Genre, index) => (
+              {genres.map((genreData: Genre, index: number) => (
                 <button
                   key={index}
-                  className={`filter-button${
-                    index === clickedGenre ? " active-button" : ""
-                  }`}
+                  className={`filter-button${index === clickedGenre ? " active-button" : ""}`}
                   onClick={() => handleGenreClick(genreData.name, index)}
                 >
                   {genreData.name}
@@ -206,50 +170,52 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
+
+        {/* ── Movie Grid ────────────────────────────────────────── */}
         <div className="right-content">
-          {filteredMovies.length == 0 ? (
-            <div>
-              <h1>
-                {" "}
-                <i className="oops-icon">
-                  <RiFileCloseFill />
-                </i>
-                OOPS! There is no from the selected options
-              </h1>
+          {filteredMovies.length === 0 ? (
+            <div className="oops-wrapper">
+              <i className="oops-icon">
+                <RiFileCloseFill />
+              </i>
+              <h2>No movies found for the selected filters.</h2>
+              <p>Try clearing a filter to discover more movies.</p>
             </div>
           ) : (
             <div className="movie-display">
-              {filteredMovies.length > 0 &&
-                filteredMovies.map((movie: any) => (
-                  <div className="movie-overview">
-                    <div
-                      className="movie-card"
-                      onClick={() => GetMovieDetails(movie.uid)}
-                    >
-                      {filteredMovies.length > 0 && (
-                        <img
-                          className="movie-image"
-                          src={movie.image}
-                        />
-                      )}
-
-                      <h3>{movie.title}</h3>
-                      <h4>{movie.language}</h4>
-                      <p className="likes">
+              {filteredMovies.map((movie: Movie) => (
+                <div className="movie-overview" key={movie.uid}>
+                  <div
+                    className="movie-card"
+                    onClick={() => GetMovieDetails(movie.uid)}
+                  >
+                    <div className="movie-image-wrapper">
+                      <img
+                        className="movie-image"
+                        src={getImageSrc(movie.image)}
+                        alt={movie.title}
+                      />
+                      {/* <span className="book-now-overlay">Book Now</span> */}
+                      <div className="movie-rating-bar">
                         <i className="star-icon">
                           <FaStar />
                         </i>
-                      
-                        {movie.likes}
-                      </p>
+                        <span className="rating-text">{movie.likes}</span>
+                        {/* <span className="rating-votes">Votes</span> */}
+                      </div>
+                    </div>
+
+                    <div className="movie-card-body">
+                      <h3>{movie.title}</h3>
+                      <h4>{movie.genre}</h4>
                     </div>
                   </div>
-                ))}
+                </div>
+              ))}
             </div>
           )}
         </div>
       </div>
-      
     </div>
   );
 };

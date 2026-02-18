@@ -4,22 +4,19 @@ import Movie from "../../Models/Movie";
 import MovieService from "../../Services/MovieService";
 import { useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
+import NavBarComponent from "../Navbar/Navbar";
 
-const MovieDetails = () => {
-  const [movieDetails, setMovieDetails] = useState<Movie>();
+const MovieDetails: React.FC = () => {
+  const [movieDetails, setMovieDetails] = useState<Movie | undefined>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    var uid = localStorage.getItem("id");
-    let func = async (id: string) => {
-      var moviesData = await MovieService.fetchMovieDetails(id || "");
-
+    const uid = localStorage.getItem("id");
+    const fetchDetails = async (id: string) => {
+      const moviesData = await MovieService.fetchMovieDetails(id);
       setMovieDetails(moviesData);
     };
-
-    if (uid) {
-      func(uid);
-    }
+    if (uid) fetchDetails(uid);
   }, []);
 
   const openBooking = (name: string) => {
@@ -27,50 +24,108 @@ const MovieDetails = () => {
     localStorage.setItem("name", name);
   };
 
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+
+  const getImageSrc = (img: string) => {
+    if (!img) return "";
+    if (/^(https?:\/\/|\/|data:)/.test(img)) return img;
+    return `../../Images/${img}`;
+  };
+
+  if (!movieDetails) {
+    return (
+      <div className="movie-details-page">
+        <NavBarComponent />
+        <div className="movie-loading">
+          <div className="loading-dot" />
+          <div className="loading-dot" />
+          <div className="loading-dot" />
+          <span style={{ marginLeft: 8 }}>Loading movie details...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      {movieDetails ? (
-        <div>
-          <div className="movie-main-content">
-            <div className="movie-left">
+    <div className="movie-details-page">
+      <NavBarComponent />
+
+      {/* ── Dark Hero Banner ───────────────────────────────────── */}
+      <div className="movie-hero">
+        {/* Blurred background using the movie poster */}
+        <div
+          className="movie-hero-bg"
+          style={{ backgroundImage: `url(${getImageSrc(movieDetails.image)})` }}
+        />
+        <div className="movie-hero-overlay" />
+
+        <div className="movie-main-content">
+          {/* Poster */}
+          <div className="movie-left">
+            <div className="movie-poster-wrapper">
               <img
-                className="movie-image"
-                src={`../../Images/${movieDetails.image}`}
-              />{" "}
+                src={getImageSrc(movieDetails.image)}
+                alt={movieDetails.title}
+              />
+            </div>
+            <span className="in-cinemas-label">In cinemas</span>
+          </div>
+
+          {/* Info */}
+          <div className="movie-right">
+            <h1>{movieDetails.title}</h1>
+
+            {/* Rating pill */}
+            <div className="movie-rating-pill">
+              <div className="rating-left">
+                <FaStar className="star-icon" />
+                <span className="rating-score">
+                  {movieDetails.likes}&nbsp;
+                  <span className="rating-votes">({movieDetails.likes ?? "14K+"}+ Votes)</span>
+                </span>
+              </div>
+              <div className="rating-divider" />
+              <button className="rate-now-btn">Rate now</button>
             </div>
 
-            <div className="movie-right">
-              <h1>{movieDetails.title}</h1>
-              <p>
-                <FaStar className="start-icon" />
-                &nbsp;{movieDetails.likes}
-              </p>
-              <button>{movieDetails.certification}</button>&nbsp;
-              <button>{movieDetails.language}</button>
-              <p>
-                {movieDetails.duration}&nbsp;,{movieDetails.genre}&nbsp;,{" "}
-                {new Date(movieDetails.releaseDate)
-                  .toLocaleDateString("en-US", {
-                    month: "short",
-                    weekday: "short",
-                    day: "numeric",
-                  })
-                  .replace(/,/g, "")}{" "}
-              </p>
-              <button
-                className="book-tickets-button"
-                onClick={() => openBooking(movieDetails.title)}
-              >
-                Book Tickets
-              </button>
+            {/* Duration · Genre · Cert · Date */}
+            <div className="movie-meta">
+              <span>{movieDetails.duration}</span>
+              <span className="meta-dot" />
+              <span>{movieDetails.genre}</span>
+              <span className="meta-dot" />
+              <span>{movieDetails.certification}</span>
+              <span className="meta-dot" />
+              <span>{formatDate(movieDetails.releaseDate)}</span>
             </div>
+
+            {/* Format + Language tags */}
+            <div className="movie-tags">
+              <span className="movie-tag">2D</span>
+              <span className="movie-tag">{movieDetails.language}</span>
+            </div>
+
+            {/* Book button */}
+            <button
+              className="book-tickets-button"
+              onClick={() => openBooking(movieDetails.title)}
+            >
+              Book tickets
+            </button>
           </div>
-          <h1>About the movie</h1>
-          <p>{movieDetails.description}</p>
         </div>
-      ) : (
-        <p>Loading movie details...</p>
-      )}
+      </div>
+
+      {/* ── About Section ─────────────────────────────────────── */}
+      <div className="movie-about">
+        <h2>About the movie</h2>
+        <p>{movieDetails.description}</p>
+      </div>
     </div>
   );
 };

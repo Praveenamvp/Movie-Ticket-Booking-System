@@ -1,93 +1,248 @@
-/* Your existing styles */
+/* ============================================================
+   ShowTime — Modern Styles
+   Theme: Light | Accent: rgb(248, 68, 100) | BG: #f5f5f5
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --accent:         rgb(248, 68, 100);
+  --accent-light:   rgba(248, 68, 100, 0.10);
+  --accent-hover:   rgb(220, 40, 75);
+  --accent-glow:    rgba(248, 68, 100, 0.22);
+  --bg-base:        #f5f5f5;
+  --bg-white:       #ffffff;
+  --text-primary:   #1a1a2e;
+  --text-secondary: #555570;
+  --text-muted:     #9999b0;
+  --border:         #e8e8f0;
+  --green:          rgb(39, 174, 96);
+  --shadow-sm:      0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md:      0 4px 20px rgba(0,0,0,0.10);
+  --radius-sm:      8px;
+  --radius-md:      14px;
+  --transition:     all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Page ─────────────────────────────────────────────────── */
+.booking-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 28px 60px;
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg-base);
+  min-height: 100vh;
+}
+
+.booking-container > h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 24px;
+}
+
+/* ── Date Selector Row ────────────────────────────────────── */
+.date-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
 .dates {
-    border-radius: 4px;
-    border: none;
-    font-size: 17px;
-    font-weight: 500;
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    width: 8%;
-
-  }
-  
-  .clicked {
-    background-color: rgb(248, 68, 100);
-    color: white;
-    width: 8%;
-
-  }
-  
-.hr-line {
-    margin: 20px auto; 
-    border: 1px solid #ddd;
-  }
-  .button-name {
-    border: 1px solid rgb(49, 49, 49); 
-    color: rgb(87, 160, 87);
-    padding: 6px;
-    background-color: #ffffff;
-    cursor: pointer;
-    width: 8%;
-  }
-  
-  .empty-heart-icon {
-    top: 3px; 
-    position: relative; 
-
-  }
-  .empty-icon {
-    top: 3px; 
-    position: relative; 
-   size: 30;
-   color:rgb(207, 16, 63) ;
-  }
-  .booking-content{
-    display: flex;
-  }
-  .booking-image{
-    width:200px;
-    height: 220px;
-
-    }
-  .booking-text{
-    margin: 10px;
-  }
-  .book{
-    border-radius: 4px;
-    border:none;
-    color: rgb(255, 255, 255);
-    padding: 10px;
-    background-color: #f74141;
-    cursor: pointer;
-    width: 50%;
-margin-left: 20%;  }
-.heart-icon{
-  color:rgb(248, 68, 100) ;
-}
-.s button{
-  display : none
-}
-.s:hover button{
-  display : block;
-  color: rgb(203, 71, 71);
-  height:5%
-}
-.s{
-  width:10%;
-  background-color: aquamarine;
-}
-.showTimeButton{
-  height: 10%;
-
-}
-.booking-close-icon{
-  float:right;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background-color: var(--bg-white);
+  color: var(--text-secondary);
+  padding: 8px 16px;
   cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
 }
 
-#seats-detail{
-background-color:rgb(248, 68, 100);
-color: #ffffff;
-border: none;
+.dates:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
 
+.clicked {
+  background-color: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 3px 12px var(--accent-glow);
+}
+
+.clicked:hover {
+  background-color: var(--accent-hover);
+  color: #ffffff;
+}
+
+/* ── ShowTime Cards ───────────────────────────────────────── */
+.showtime-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.showTimeButton {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  list-style: none;
+}
+
+.showTimeButton:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+/* Heart icon */
+.heart-icon {
+  color: var(--accent);
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.heart-icon:hover { transform: scale(1.2); }
+
+.empty-heart-icon {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+  position: static;
+}
+
+.empty-heart-icon:hover {
+  color: var(--accent);
+  transform: scale(1.2);
+}
+
+/* Theatre / location name */
+.theatre-name {
+  flex: 1;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Showtime slot pills */
+.showtimes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.button-name {
+  border: 1.5px solid var(--green);
+  color: var(--green);
+  padding: 6px 16px;
+  background-color: rgba(39, 174, 96, 0.07);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.button-name:hover {
+  background-color: var(--green);
+  color: #ffffff;
+}
+
+/* Divider */
+.hr-line {
+  display: none;
+}
+
+/* ── Tooltip override ─────────────────────────────────────── */
+#seats-detail {
+  background-color: var(--accent) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+}
+
+/* ── Booking modal content ────────────────────────────────── */
+.booking-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.booking-image {
+  width: 180px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.booking-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.booking-close-icon {
+  float: right;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  transition: var(--transition);
+}
+
+.booking-close-icon:hover { color: var(--accent); }
+
+.book {
+  border-radius: var(--radius-sm);
+  border: none;
+  color: #ffffff;
+  padding: 10px 24px;
+  background-color: var(--accent);
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  width: 100%;
+  margin-left: 0;
+  margin-top: 10px;
+  transition: var(--transition);
+}
+
+.book:hover {
+  background-color: var(--accent-hover);
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .booking-container { padding: 20px 14px 40px; }
+  .showTimeButton { flex-wrap: wrap; }
+  .theatre-name { width: 100%; }
 }

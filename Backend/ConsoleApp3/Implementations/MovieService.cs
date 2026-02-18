@@ -11,13 +11,11 @@ namespace BusinessLayer.Implementations
     {
         private readonly IMovieRepo _movieRepo;
         private readonly IBusinessLayerMapper _businessLayerMapper;
-        private readonly IBlobService _blobService;
 
-        public MovieService(IMovieRepo movieRepo, IBusinessLayerMapper businessLayerMapper,IBlobService blobService)
+        public MovieService(IMovieRepo movieRepo, IBusinessLayerMapper businessLayerMapper)
         {
             _movieRepo = movieRepo;
             _businessLayerMapper = businessLayerMapper;
-            _blobService= blobService;
         }
 
         public async Task<List<GenreView>> GetAllGenre()
@@ -41,7 +39,7 @@ namespace BusinessLayer.Implementations
 
                 foreach (var item in movies)
                 {
-                    item.Image =await _blobService.GetBlob(item.Image, "azurelearning-images");
+                    //item.Image =await _blobService.GetBlob(item.Image, "azurelearning-images");
                     movieViews.Add(await _businessLayerMapper.MovieToMovieView(item));
                 }
             }

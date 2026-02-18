@@ -31,10 +31,10 @@ builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ITokenGenerate, Token>();
-builder.Services.AddScoped(u => new BlobServiceClient(
-    builder.Configuration.GetValue<string>("BlobConnection")
-    ));
-builder.Services.AddScoped<IBlobService, BlobService>();
+//builder.Services.AddScoped(u => new BlobServiceClient(
+//    builder.Configuration.GetValue<string>("BlobConnection")
+//    ));
+//builder.Services.AddScoped<IBlobService, BlobService>();
 builder.Services.AddCors(opts =>
 {
     opts.AddPolicy("ReactCORS", options =>
