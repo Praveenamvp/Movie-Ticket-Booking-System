@@ -110,11 +110,20 @@ const LandingPage: React.FC = () => {
     setFilteredMovies(movies);
   };
 
-  const getImageSrc = (img: string) => {
-    const image = img || "";
+  const getImageSrc = (movie: any) => {
+    const image = movie?.title || "";
+
+    // If no title, return default image
     if (!image) return "/Images/default-movie.png";
-    if (/^(https?:\/\/|\/|data:)/.test(image)) return image;
-    return `/Images/${image}`;
+
+    // // If no file extension, assume .jpg
+    // if (!/\.[a-zA-Z0-9]+$/.test(image)) {
+    //   console.log(`No file extension found for "${image}". Assuming .jpg.`);
+    //   return `../../Images/${image}.jpg`;
+
+    // }
+    console.log(`Using image source: ${image}`);
+    return `../../Images/${image}.jpg`;
   };
 
   return (
@@ -192,7 +201,7 @@ const LandingPage: React.FC = () => {
                     <div className="movie-image-wrapper">
                       <img
                         className="movie-image"
-                        src={getImageSrc(movie.image)}
+                        src={getImageSrc(movie)}
                         alt={movie.title}
                       />
                       {/* <span className="book-now-overlay">Book Now</span> */}

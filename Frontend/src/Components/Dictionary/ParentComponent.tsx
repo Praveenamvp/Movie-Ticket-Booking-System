@@ -3,12 +3,9 @@
 // import LocationDic from "../../Models/LocationDic";
 // import ChildComponent from "./ChildComponent";
 
-
-
 // function ParentComponent() {
 //   var [locations, setLocations] = useState<LocationDic[]>([]);
 //   var [data, setData] = useState<any[]>([]);
-
 
 //   useEffect(() => {
 //     fetchLocations();
@@ -28,17 +25,19 @@
 //   };
 //   return (
 //     <div className="location-data">
-        
+
 //       {data.map((location: any,index) => (
 //         <div className="location" key={location.uid}>
 //           <div key={index}>
 //                 <ChildComponent locationData={location} />
 //               </div>
 //         </div>
-      
+
 //       ))}
 //     </div>
 //   );
 // }
 
 // export default ParentComponent;
+
+export {};

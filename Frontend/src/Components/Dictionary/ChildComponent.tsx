@@ -13,7 +13,7 @@
 //   };
 //   return (
 //     <div className="child-location">
-      
+
 // {locationData.name}
 //       {isOpen && locationData.locationChild && (
 //         <div className="child-locations">
@@ -27,3 +27,5 @@
 // };
 
 // export default ChildComponent;
+
+export {};
