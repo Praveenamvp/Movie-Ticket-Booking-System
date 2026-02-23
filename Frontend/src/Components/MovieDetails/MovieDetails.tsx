@@ -34,7 +34,7 @@ const MovieDetails: React.FC = () => {
   const getImageSrc = (img: string) => {
     if (!img) return "";
     if (/^(https?:\/\/|\/|data:)/.test(img)) return img;
-    return `../../Images/${img}`;
+    return `/Images/${img}`;
   };
 
   if (!movieDetails) {

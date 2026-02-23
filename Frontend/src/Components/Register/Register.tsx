@@ -1,5 +1,4 @@
 import { useState } from "react";
-import reg from "../../Images/Login.png";
 import Modal from "react-modal";
 import UserService from "../../Services/UserService";
 import { useDispatch, useSelector } from "react-redux";
@@ -63,7 +62,7 @@ function RegisterComponent() {
           <div className="register-right">
 
             {/* Top illustration */}
-            <img src={reg} alt="Register" className="register-top-img" />
+            <img src="/Images/Register.png" loading="lazy" alt="Register" className="register-top-img" />
 
             {/* Title */}
             <h2 className="register-title">Join the Movie Club!</h2>

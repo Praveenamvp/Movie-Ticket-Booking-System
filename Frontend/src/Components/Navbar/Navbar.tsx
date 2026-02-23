@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../LandingPage/LandingPage.css";
-import logo from "../../Images/Logo.png";
 import { FaUserAstronaut } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import TicketBooking from "../../Models/StateModels";
@@ -31,7 +30,7 @@ function NavBarComponent() {
   return (
     <div>
       <div className="nav-bar">
-        <img className="logo" src={logo} alt="Logo" />
+        <img className="logo" src="/Images/Logo.png" loading="lazy" alt="Logo" />
         <div className="nav-bar-search">
           <input
             type="text"

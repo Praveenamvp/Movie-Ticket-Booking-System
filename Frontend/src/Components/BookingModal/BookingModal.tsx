@@ -7,7 +7,6 @@ import Modal from "react-modal";
 import BookingRequest from "../../Models/Booking";
 import BookingService from "../../Services/BookingService";
 import { useDispatch, useSelector } from "react-redux";
-import booking from "../../Images/booking.png"
 import { useState } from "react";
 import TicketBooking from "../../Models/StateModels";
 import ShowTimeIdSeats from "../../Models/ShowTimeIdSeats";
@@ -116,7 +115,7 @@ function BookingModalComponent() {
       >
         <div className="booking-content">
           <div>
-            <img className="booking-image" src={booking}></img>
+            <img className="booking-image" src="/Images/booking.png" loading="lazy"></img>
           </div>
           <div className="booking-text">
             <span className="booking-close-icon" onClick={closeModal}>

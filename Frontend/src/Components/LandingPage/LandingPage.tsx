@@ -123,7 +123,7 @@ const LandingPage: React.FC = () => {
 
     // }
     console.log(`Using image source: ${image}`);
-    return `../../Images/${image}.jpg`;
+    return `/Images/${image}.jpg`;
   };
 
   return (

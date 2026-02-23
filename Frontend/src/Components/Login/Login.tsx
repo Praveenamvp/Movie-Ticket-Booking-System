@@ -7,7 +7,6 @@ import {
   updateLoginModelState,
   updateRegisterModelState,
 } from "../../Redux/Action";
-import loginImg from "../../Images/Login.png";
 import "../Login/Login.css";
 import TicketBooking from "../../Models/StateModels";
 import { toast } from "react-toastify";
@@ -82,7 +81,7 @@ function LoginComponent() {
       >
         <div className="login-main-content">
           <div className="login-content">
-            <img src={loginImg} alt="Login" className="login-top-img" />
+            <img src="/Images/Login.png" loading="lazy" alt="Login" className="login-top-img" />
             <h2 className="login-title">Welcome Back!</h2>
             <div className="login-heart">♡</div>
 
